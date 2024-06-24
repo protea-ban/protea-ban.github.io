@@ -1,0 +1,195 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Supervised VS Unsupervised Machine Learning | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Supervised VS Unsupervised Machine Learning | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="Supervised VS Unsupervised Machine Learning
+Supervised learning part 1
+Machine learning is creating tremendous economic ..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Supervised VS Unsupervised Machine Learning
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-06-27
+              </span>
+              <span>
+                30 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h1 id="supervised-vs-unsupervised-machine-learning">Supervised VS Unsupervised Machine Learning</h1>
+<h2 id="supervised-learning-part-1">Supervised learning part 1</h2>
+<p>Machine learning is creating tremendous economic value today. I think 99 percent of the economic value created by machine learning today is through one type of machine learning, which is called supervised learning. Let's take a look at what that means. Supervised machine learning or more commonly, supervised learning, refers to algorithms that learn x to y or input to output mappings. The key characteristic of supervised learning is that you give your learning algorithm examples to learn from. That includes the right answers, whereby right answer, I mean, the correct label y for a given input x, and is by seeing correct pairs of input x and desired output label y that the learning algorithm eventually learns to take just the input alone without the output label and gives a reasonably accurate prediction or guess of the output. Let's look at some examples. If the input x is an email and the output y is this email, spam or not spam, this gives you your spam filter. Or if the input is an audio clip and the algorithm's job is output the text transcript, then this is speech recognition. Or if you want to input English and have it output to corresponding Spanish, Arabic, Hindi, Chinese, Japanese, or something else translation, then that's machine translation. Or the most lucrative form of supervised learning today is probably used in online advertising. Nearly all the large online ad platforms have a learning algorithm that inputs some information about an ad and some information about you and then tries to figure out if you will click on that ad or not. Because by showing you ads they're just slightly more likely to click on, for these large online ad platforms, every click is revenue, this actually drives a lot of revenue for these companies. This is something I once done a lot of work on, maybe not the most inspiring application, but it certainly has a significant economic impact in some countries today. Or if you want to build a self-driving car, the learning algorithm would take as input an image and some information from other sensors such as a radar or other things and then try to output the position of, say, other cars so that your self-driving car can safely drive around the other cars. Or take manufacturing. I've actually done a lot of work in this sector at learning AI. You can have a learning algorithm takes as input a picture of a manufactured product, say a cell phone that just rolled off the production line and have the learning algorithm output whether or not there is a scratch, dent, or other defect in the product. This is called visual inspection and it's helping manufacturers reduce or prevent defects in their products. In all of these applications, you will first train your model with examples of inputs x and the right answers, that is the labels y. After the model has learned from these input, output, or x and y pairs, they can then take a brand new input x, something it has never seen before, and try to produce the appropriate corresponding output y. Let's dive more deeply into one specific example. Say you want to predict housing prices based on the size of the house. You've collected some data and say you plot the data and it looks like this. Here on the horizontal axis is the size of the house in square feet. Yes, I live in the United States where we still use square feet. I know most of the world uses square meters. Here on the vertical axis is the price of the house in, say, thousands of dollars. With this data, let's say a friend wants to know what's the price for their 750 square foot house. How can the learning algorithm help you? One thing a learning algorithm might be able to do is say, for the straight line to the data and reading off the straight line, it looks like your friend's house could be sold for maybe about, I don't know, $150,000. But fitting a straight line isn't the only learning algorithm you can use. There are others that could work better for this application. For example, routed and fitting a straight line, you might decide that it's better to fit a curve, a function that's slightly more complicated or more complex than a straight line. If you do that and make a prediction here, then it looks like, well, your friend's house could be sold for closer to $200,000. One of the things you see later in this class is how you can decide whether to fit a straight line, a curve, or another function that is even more complex to the data. Now, it doesn't seem appropriate to pick the one that gives your friend the best price, but one thing you see is how to get an algorithm to systematically choose the most appropriate line or curve or other thing to fit to this data. What you've seen in this slide is an example of supervised learning. Because we gave the algorithm a dataset in which the so-called right answer, that is the label or the correct price y is given for every house on the plot. The task of the learning algorithm is to produce more of these right answers, specifically predicting what is the likely price for other houses like your friend's house. That's why this is supervised learning. To define a little bit more terminology, this housing price prediction is the particular type of supervised learning called regression. By regression, I mean we're trying to predict a number from infinitely many possible numbers such as the house prices in our example, which could be 150,000 or 70,000 or 183,000 or any other number in between. That's supervised learning, learning input, output, or x to y mappings. You saw in this video an example of regression where the task is to predict number. But there's also a second major type of supervised learning problem called classification. Let's take a look at what that means in the next video.</p>
+<h2 id="supervised-learning-part-2">Supervised learning part 2</h2>
+<p>So supervised learning algorithms learn to predict input, output or X to Y mapping. And in the last video you saw that regression algorithms, which is a type of supervised learning algorithm learns to predict numbers out of infinitely many possible numbers. There's a second major type of supervised learning algorithm called a classification algorithm. Let's take a look at what this means. Take breast cancer detection as an example of a classification problem. Say you're building a machine learning system so that doctors can have a diagnostic tool to detect breast cancer. This is important because early detection could potentially save a patient's life. Using a patient's medical records your machine learning system tries to figure out if a tumor that is a lump is malignant meaning cancerous or dangerous. Or if that tumor, that lump is benign, meaning that it's just a lump that isn't cancerous and isn't that dangerous? Some of my friends have actually been working on this specific problem. So maybe your dataset has tumors of various sizes. And these tumors are labeled as either benign, which I will designate in this example with a 0 or malignant, which will designate in this example with a 1. You can then plot your data on a graph like this where the horizontal axis represents the size of the tumor and the vertical axis takes on only two values 0 or 1 depending on whether the tumor is benign, 0 or malignant 1. One reason that this is different from regression is that we're trying to predict only a small number of possible outputs or categories. In this case two possible outputs 0 or 1, benign or malignant. This is different from regression which tries to predict any number, all of the infinitely many number of possible numbers. And so the fact that there are only two possible outputs is what makes this classification. Because there are only two possible outputs or two possible categories in this example, you can also plot this data set on a line like this. Right now, I'm going to use two different symbols to denote the category using a circle an O to denote the benign examples and a cross to denote the malignant examples. And if new patients walks in for a diagnosis and they have a lump that is this size, then the question is, will your system classify this tumor as benign or malignant? It turns out that in classification problems you can also have more than two possible output categories. Maybe you're learning algorithm can output multiple types of cancer diagnosis if it turns out to be malignant. So let's call two different types of cancer type 1 and type 2. In this case the average would have three possible output categories it could predict. And by the way in classification, the terms output classes and output categories are often used interchangeably. So what I say class or category when referring to the output, it means the same thing. So to summarize classification algorithms predict categories. Categories don't have to be numbers. It could be non numeric for example, it can predict whether a picture is that of a cat or a dog. And it can predict if a tumor is benign or malignant. Categories can also be numbers like 0, 1 or 0, 1, 2. But what makes classification different from regression when you're interpreting the numbers is that classification predicts a small finite limited set of possible output categories such as 0, 1 and 2 but not all possible numbers in between like 0.5 or 1.7. In the example of supervised learning that we've been looking at, we had only one input value the size of the tumor. But you can also use more than one input value to predict an output. Here's an example, instead of just knowing the tumor size, say you also have each patient's age in years. Your new data set now has two inputs, age and tumor size. What in this new dataset we're going to use circles to show patients whose tumors are benign and crosses to show the patients with a tumor that was malignant. So when a new patient comes in, the doctor can measure the patient's tumor size and also record the patient's age. And so given this, how can we predict if this patient's tumor is benign or malignant? Well, given the day said like this, what the learning algorithm might do is find some boundary that separates out the malignant tumors from the benign ones. So the learning algorithm has to decide how to fit a boundary line through this data. The boundary line found by the learning algorithm would help the doctor with the diagnosis. In this case the tumor is more likely to be benign. From this example we have seen how to inputs the patient's age and tumor size can be used. In other machine learning problems often many more input values are required. My friends who worked on breast cancer detection use many additional inputs, like the thickness of the tumor clump, uniformity of the cell size, uniformity of the cell shape and so on. So to recap supervised learning maps input x to output y, where the learning algorithm learns from the quote right answers. The two major types of supervised learning our regression and classification. In a regression application like predicting prices of houses, the learning algorithm has to predict numbers from infinitely many possible output numbers. Whereas in classification the learning algorithm has to make a prediction of a category, all of a small set of possible outputs. So you now know what is supervised learning, including both regression and classification. I hope you're having fun. Next there's a second major type of machine learning called unsupervised learning. Let's go on to the next video to see what that is.</p>
+<h2 id="unsupervised-learning-part-1">Unsupervised learning part 1</h2>
+<p>After supervised learning, the most widely used form of machine learning is unsupervised learning. Let's take a look at what that means, we've talked about supervised learning and this video is about unsupervised learning. But don't let the name uncivilized for you, unsupervised learning is I think just as super as supervised learning. When we're looking at supervised learning in the last video recalled, it looks something like this in the case of a classification problem. Each example, was associated with an output label y such as benign or malignant, designated by the poles and crosses in unsupervised learning. Were given data that isn't associated with any output labels y, say you're given data on patients and their tumor size and the patient's age. But not whether the tumor was benign or malignant, so the dataset looks like this on the right. We're not asked to diagnose whether the tumor is benign or malignant, because we're not given any labels. Why in the dataset, instead, our job is to find some structure or some pattern or just find something interesting in the data. This is unsupervised learning, we call it unsupervised because we're not trying to supervise the algorithm. To give some quote right answer for every input, instead, we asked the our room to figure out all by yourself what's interesting. Or what patterns or structures that might be in this data, with this particular data set. An unsupervised learning algorithm, might decide that the data can be assigned to two different groups or two different clusters. And so it might decide, that there's one cluster what group over here, and there's another cluster or group over here. This is a particular type of unsupervised learning, called a clustering algorithm. Because it places the unlabeled data, into different clusters and this turns out to be used in many applications. For example, clustering is used in google news, what google news does is every day it goes. And looks at hundreds of thousands of news articles on the internet, and groups related stories together. For example, here is a sample from Google News, where the headline of the top article, is giant panda gives birth to rear twin cubs at Japan's oldest zoo. This article has actually caught my eye, because my daughter loves pandas and so there are a lot of stuff panda toys. And watching panda videos in my house, and looking at this, you might notice that below this are other related articles. Maybe from the headlines alone, you can start to guess what clustering might be doing. Notice that the word panda appears here here, here, here and here and notice that the word twin also appears in all five articles. And the word Zoo also appears in all of these articles, so the clustering algorithm is finding articles. All of all the hundreds of thousands of news articles on the internet that day, finding the articles that mention similar words and grouping them into clusters. Now, what's cool is that this clustering algorithm figures out on his own which words suggest, that certain articles are in the same group. What I mean is there isn't an employee at google news who's telling the algorithm to find articles that the word panda. And twins and zoo to put them into the same cluster, the news topics change every day. And there are so many news stories, it just isn't feasible to people doing this every single day for all the topics that use covers. Instead the algorithm has to figure out on his own without supervision, what are the clusters of news articles today. So that's why this clustering algorithm, is a type of unsupervised learning algorithm. Let's look at the second example of unsupervised learning applied to clustering genetic or DNA data. This image shows a picture of DNA micro array data, these look like tiny grids of a spreadsheet. And each tiny column represents the genetic or DNA activity of one person, So for example, this entire Column here is from one person's DNA. And this other column is of another person, each row represents a particular gene. So just as an example, perhaps this role here might represent a gene that affects eye color, or this role here is a gene that affects how tall someone is. Researchers have even found a genetic link to whether someone dislikes certain vegetables, such as broccoli, or brussels sprouts, or asparagus. So next time someone asks you why didn't you finish your salad, you can tell them, maybe it's genetic for DNA micro race. The idea is to measure how much certain genes, are expressed for each individual person. So these colors red, green, gray, and so on, show the degree to which different individuals do, or do not have a specific gene active. And what you can do is then run a clustering algorithm to group individuals into different categories. Or different types of people like maybe these individuals that group together, and let's just call this type one. And these people are grouped into type two, and these people are groups as type three. This is unsupervised learning, because we're not telling the algorithm in advance, that there is a type one person with certain characteristics. Or a type two person with certain characteristics, instead what we're saying is here's a bunch of data. I don't know what the different types of people are but can you automatically find structure into data. And automatically figure out whether the major types of individuals, since we're not giving the algorithm the right answer for the examples in advance. This is unsupervised learning, here's the third example, many companies have huge databases of customer information given this data. Can you automatically group your customers, into different market segments so that you can more efficiently serve your customers. Concretely the deep learning dot AI team did some research to better understand the deep learning dot AI community. And why different individuals take these classes, subscribed to the batch weekly newsletter, or attend our AI events. Let's visualize the deep learning dot AI community, as this collection of people running clustering. That is market segmentation found a few distinct groups of individuals, one group's primary motivation is seeking knowledge to grow their skills. Perhaps this is you, and so that's great, a second group's primary motivation is looking for a way to develop their career. Maybe you want to get a promotion or a new job, or make some career progression if this describes you, that's great too. And yet another group wants to stay updated on how AI impacts their field of work, perhaps this is you, that's great too. This is a clustering that our team used to try to better serve our community as we're trying to figure out. Whether the major categories of learners in the deeper and community, So if any of these is your top motivation for learning, that's great. And I hope I'll be able to help you on your journey, or in case this is you, and you want something totally different than the other three categories. That's fine too, and I want you to know, I love you all the same, so to summarize a clustering algorithm. Which is a type of unsupervised learning algorithm, takes data without labels and tries to automatically group them into clusters. And so maybe the next time you see or think of a panda, maybe you think of clustering as well. And besides clustering, there are other types of unsupervised learning as well. Let's go on to the next video, to take a look at some other types of unsupervised learning algorithms.</p>
+<h2 id="unsupervised-learning-part-2">Unsupervised learning part 2</h2>
+<p>In the last video, you saw what is unsupervised learning, and one type of unsupervised learning called clustering. Let's give a slightly more formal definition of unsupervised learning and take a quick look at some other types of unsupervised learning other than clustering. Whereas in supervised learning, the data comes with both inputs x and input labels y, in unsupervised learning, the data comes only with inputs x but not output labels y, and the algorithm has to find some structure or some pattern or something interesting in the data. We're seeing just one example of unsupervised learning called a clustering algorithm, which groups similar data points together. In this specialization, you'll learn about clustering as well as two other types of unsupervised learning. One is called anomaly detection, which is used to detect unusual events. This turns out to be really important for fraud detection in the financial system, where unusual events, unusual transactions could be signs of fraud and for many other applications. You also learn about dimensionality reduction. This lets you take a big data-set and almost magically compress it to a much smaller data-set while losing as little information as possible. In case anomaly detection and dimensionality reduction don't seem to make too much sense to you yet. Don't worry about it. We'll get to this later in the specialization. Now, I'd like to ask you another question to help you check your understanding, and no pressure, if you don't get it right on the first try, is totally fine. Please select any of the following that you think are examples of unsupervised learning. Two are unsupervised examples and two are supervised learning examples. Please take a look.</p>
+<p>Maybe you remember the spam filtering problem. If you have labeled data you now label as spam or non-spam e-mail, you can treat this as a supervised learning problem. The second example, the news story example. That's exactly the Google News and tangible example that you saw in the last video. You can approach that using a clustering algorithm to group news articles together. That we'll use unsupervised learning. The market segmentation example that I talked about a little bit earlier. You can do that as an unsupervised learning problem as well because you can give your algorithm some data and ask it to discover market segments automatically. The final example on diagnosing diabetes. Well, actually that's a lot like our breast cancer example from the supervised learning videos. Only instead of benign or malignant tumors, we instead have diabetes or not diabetes. You can approach this as a supervised learning problem, just like we did for the breast tumor classification problem. Even though in the last video, we've talked mainly about clustering, in later videos, in this specialization, we'll dive much more deeply into anomaly detection and dimensionality reduction as well. That's unsupervised learning. Before we wrap up this section, I want to share with you something that I find really exciting, and useful, which is the use of Jupyter Notebooks in machine learning. Let's take a look at that in the next video.</p>
+<h2 id="jupyter-notebooks">Jupyter Notebooks</h2>
+<p>From the videos, you've seen supervised learning and unsupervised learning and also examples of both. For you to more deeply understand these concepts, I'll like to invite you in this class to see, learn and maybe later write codes yourself to implement these concepts. The most widely used tool by machine learning and data science practitioners today is the Jupyter Notebook. This is the default environments that a lot of us use to code up and experiment and try things out. In this class, right here in your web browser, you build a user Jupyter Notebook environment to test out some of these ideas for yourself as well. This is not some made up simplified environment, this is the exact same environments, the exact same tool, the Jupyter Notebook that developers are using in many large countries right now. One type of lab that you see throughout this class are optional labs, which are ones you can open and run one line at a time with usually no need to write any code yourself. Optional labs are designed to be very easy and I can guarantee you will get full marks, every single one of them because there are no marks. All you need to do is open it up and just run the code we've provided. By reading through and running the code in the optional labs, you see how machine learning code runs. You should complete them relatively quickly just by running it one line at a time from top to bottom. Optional labs are completely optional so you don't have to do them at all if you don't want to, but I hope you will take a look because running through them will give you a deeper feel, give you a little bit more experience with what machine learning algorithms, what machine learning code actually looks like. Starting next week, there'll also be some practice labs which would give you an opportunity to write some of that code yourself but we'll get to that next week. Don't worry about it for now and I hope you just go through the next optional lab and get through the rest of the content for this week. Let's take a look at an example of a notebook. Here's what you see when you go to the first optional lab. Feel free to scroll up and down and browse and mouseover the different menus and take a look at the different options here. You might notice that there are two types of these blocks, also called cells in the notebook and there are two types of cells. One is what's called a Markdown cell, which means a bunch of tax. Here you can actually edit the text if you don't like the text that we wrote, but this is text that describes the code. Then there's a second type of block or cell which looks like this, which has a code cell. Here, we've already provided the code and if you want to run this code cell, hitting Shift Enter will run the code in this code cell, and by the way, if you click on a markdown cell, so this showing all this formatting, go ahead and hit Shift Enter on your keyboard as well and that will also convert back to this nicely formatted text. This optional lab shows some common Python code, so you can go ahead and run this afterwards in your own Jupyter notebook. When you jump into this notebook yourself, what I'd like you to do is select the cells and hit Shift Enter. Read through the code, see if it makes sense, try to make a prediction about what you think this code would do and then hit Shift Enter and then see what the code actually does, and if you like it, feel free to go in and edit the code, change the code, and then run it and see what happens. If you haven't played in the Jupyter Notebook environment for, I hope you become more familiar with Python in a Jupyter Notebook. I spend a lot of hours playing around in Jupyter notebooks and so I hope you have fun with them too. After that, I look forward to seeing you in the next video where we'll take the supervised learning problem as start to flesh out our first supervised learning algorithm. I hope that will be fun to you and look forward to seeing you there.</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#supervised-vs-unsupervised-machine-learning">Supervised VS Unsupervised Machine Learning</a>
+<ul>
+<li><a href="#supervised-learning-part-1">Supervised learning part 1</a></li>
+<li><a href="#supervised-learning-part-2">Supervised learning part 2</a></li>
+<li><a href="#unsupervised-learning-part-1">Unsupervised learning part 1</a></li>
+<li><a href="#unsupervised-learning-part-2">Unsupervised learning part 2</a></li>
+<li><a href="#jupyter-notebooks">Jupyter Notebooks</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/骚操作！利用百度首页换肤的图片上传 API 做图床/">
+              <h3 class="post-title">
+                骚操作！利用百度首页换肤的图片上传 API 做图床
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

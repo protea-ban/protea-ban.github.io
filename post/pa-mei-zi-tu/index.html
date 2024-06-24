@@ -1,0 +1,272 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>爬妹子图 | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="爬妹子图 | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+爬MEIZITU网站上的图片
+
+
+爬MEIZITU网站上的图片
+练手用的小爬虫。
+
+直接用两个正则匹配来找到图片的真正链接。
+
+# -*- coding: utf-8 -*-
+# @Time    : 2020/6/15 16:18
+# ..." />
+    <meta name="keywords" content="爬虫,Python" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              爬妹子图
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-12-01
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://protea-ban.github.io/tag/Ij0jF8Knmd/" class="post-tag">
+                  # 爬虫
+                </a>
+              
+                <a href="https://protea-ban.github.io/tag/pW_GbuUzgl/" class="post-tag">
+                  # Python
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://protea-ban.github.io/post-images/pa-mei-zi-tu.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p><ul class="markdownIt-TOC">
+<li><a href="#%E7%88%ACmeizitu%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87">爬MEIZITU网站上的图片</a></li>
+</ul>
+</p>
+<h1 id="爬meizitu网站上的图片">爬MEIZITU网站上的图片</h1>
+<p>练手用的小爬虫。</p>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/proteaban/blogimages/raw/master/img/20200616202624.png" alt="" loading="lazy"></figure>
+<p>直接用两个正则匹配来找到图片的真正链接。</p>
+<pre><code class="language-python">
+# -*- coding: utf-8 -*-
+# @Time    : 2020/6/15 16:18
+# @Author  : banshaohuan
+# @Site    :
+# @File    : jiandan.py
+# @Software: PyCharm
+import re
+import urllib.request
+from http import cookiejar
+
+headers = {
+    &quot;Accept&quot;: &quot; text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;,
+    &quot;Accept-Encoding&quot;: &quot; gb2312,utf-8&quot;,
+    &quot;Accept-Language&quot;: &quot; zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;,
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36 SE 2.X MetaSr 1.0&quot;,
+    &quot;Connection&quot;: &quot;keep-alive&quot;,
+    &quot;referer&quot;: &quot;qq.com&quot;,
+}
+cjar = cookiejar.CookieJar()
+opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cjar))
+headall = []
+
+for key, value in headers.items():
+    item = (key, value)
+    headall.append(item)
+
+opener.addheaders = headall
+urllib.request.install_opener(opener)
+
+
+def craw(url, page):
+    html1 = urllib.request.urlopen(url).read()
+    html1 = str(html1)
+
+    pat1 = '&lt;ul id=&quot;pins&quot;&gt;.+?&lt;/ul&gt;'
+    result1 = re.compile(pat1, re.S).findall(html1)
+    result1 = result1[0]
+    pat2 = &quot;data-original=\\\\\\'(.*?)\\\\\\'&quot;
+    image_list = re.compile(pat2, re.S).findall(result1)
+
+    index = 1
+    path_name = &quot;D:/Images/jiandan/xinggan/&quot;
+    import os
+
+    if not os.path.exists(path_name):
+        os.mkdir(path_name)
+    for image_url in image_list:
+        file_name = path_name + str(page) + &quot;_&quot; + str(index) + &quot;.jpg&quot;
+        try:
+            urllib.request.urlretrieve(image_url, filename=file_name)
+        except urllib.error.URLError as e:
+            if hasattr(e, &quot;code&quot;):
+                index += 1
+            if hasattr(e, &quot;reason&quot;):
+                index += 1
+
+        index += 1
+
+
+for i in range(1, 10):
+    url = &quot;http://www.mzitu.com/xinggan/page/&quot; + str(i)
+    import time
+    time.sleep(6)
+    print(url)
+    craw(url, i)
+
+</code></pre>
+<p>小网站，学习为主，不想给服务器太大压力，爬的时候最好设置个时间间隔。</p>
+<figure data-type="image" tabindex="2"><img src="http://imgsrc.baidu.com/super/pic/item/0b55b319ebc4b74557825846c0fc1e178a82154f.jpg" alt="" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E7%88%ACmeizitu%E7%BD%91%E7%AB%99%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87">爬MEIZITU网站上的图片</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/Machine Learning/">
+              <h3 class="post-title">
+                Supervised VS Unsupervised Machine Learning
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

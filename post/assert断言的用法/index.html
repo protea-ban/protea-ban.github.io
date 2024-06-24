@@ -1,0 +1,193 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>assert断言的用法 | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="assert断言的用法 | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="assert断言的用法
+assert（断言）用于判断一个表达式，在表达式条件为 False 的时候触发异常。
+断言可以在条件不满足程序运行的情况下直接返回错误，而不必等待程序运行后出现崩溃的情况。
+assert expression [, ..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              assert断言的用法
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-05-27
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="assert断言的用法">assert断言的用法</h3>
+<p>assert（断言）用于判断一个表达式，在表达式条件为 False 的时候触发异常。</p>
+<p>断言可以在条件不满足程序运行的情况下直接返回错误，而不必等待程序运行后出现崩溃的情况。</p>
+<pre><code class="language-python">assert expression [, arguments]
+# 等价于
+if not expression:
+    raise AssertionError(arguments)
+</code></pre>
+<p>arguments 为字符串，是报错时的提示信息。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#assert%E6%96%AD%E8%A8%80%E7%9A%84%E7%94%A8%E6%B3%95">assert断言的用法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/bat-pi-chu-li-zhuan-html-wei-md/">
+              <h3 class="post-title">
+                bat批处理转HTML为MD
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>bat批处理转HTML为MD | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="bat批处理转HTML为MD | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="%文件重命名 去掉里面的空格 此步骤似乎可省%
+@echo off&amp;setlocal enabledelayedexpansion
+for /f &quot;delims=&quot; %%i in ('dir /s/b *.*')..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              bat批处理转HTML为MD
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-05-26
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://api.dujin.org/bing/1366.php" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <pre><code class="language-Batch">%文件重命名 去掉里面的空格 此步骤似乎可省%
+@echo off&amp;setlocal enabledelayedexpansion
+for /f &quot;delims=&quot; %%i in ('dir /s/b *.*') do (
+set &quot;foo=%%~nxi&quot;
+set foo=!foo: =!
+set foo=!foo: =!
+ren &quot;%%~fi&quot; &quot;!foo!&quot;
+)
+
+%更改文件后缀%
+ren *.md *.html
+
+%用pandoc转换HTML到MD%
+for %a in (*.html) do @pandoc %~na.html -o %~na.md
+
+exit
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,401 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>用pandas计算占比 | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="用pandas计算占比 | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="用pandas计算占比
+需求描述
+现有需求如下：
+2020 年第一季度的销售量已经出来，如下表，现在想得到每个月各产品在本月销售量的占比。
+
+
+
+date
+name
+value
+
+
+
+
+202001
+A
+30
+
+
+202001
+B
+25
+
+..." />
+    <meta name="keywords" content="Python" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              用pandas计算占比
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-12-01
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://protea-ban.github.io/tag/pW_GbuUzgl/" class="post-tag">
+                  # Python
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://protea-ban.github.io/post-images/用pandas计算占比.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h1 id="用pandas计算占比">用pandas计算占比</h1>
+<h2 id="需求描述">需求描述</h2>
+<p><strong>现有需求如下：</strong></p>
+<p>2020 年第一季度的销售量已经出来，如下表，现在想得到每个月各产品在本月销售量的占比。</p>
+<table>
+<thead>
+<tr>
+<th>date</th>
+<th>name</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>202001</td>
+<td>A</td>
+<td>30</td>
+</tr>
+<tr>
+<td>202001</td>
+<td>B</td>
+<td>25</td>
+</tr>
+<tr>
+<td>202001</td>
+<td>C</td>
+<td>45</td>
+</tr>
+<tr>
+<td>202002</td>
+<td>A</td>
+<td>20</td>
+</tr>
+<tr>
+<td>202002</td>
+<td>B</td>
+<td>35</td>
+</tr>
+<tr>
+<td>202002</td>
+<td>C</td>
+<td>45</td>
+</tr>
+<tr>
+<td>202003</td>
+<td>A</td>
+<td>10</td>
+</tr>
+<tr>
+<td>202003</td>
+<td>B</td>
+<td>30</td>
+</tr>
+<tr>
+<td>202003</td>
+<td>C</td>
+<td>60</td>
+</tr>
+</tbody>
+</table>
+<p>在平常使用 Excel 时，可能会想将各月份销售总量计算出来，另做一列，进行相除即可，就像下表这样，这里为了方便计算，我人为将销售量设置成了 100。</p>
+<table>
+<thead>
+<tr>
+<th>date</th>
+<th>name</th>
+<th>value</th>
+<th>总额</th>
+<th>占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>202001</td>
+<td>A</td>
+<td>30</td>
+<td>100</td>
+<td>=C2/D2</td>
+</tr>
+<tr>
+<td>202001</td>
+<td>B</td>
+<td>25</td>
+<td>100</td>
+<td>=C2/D3</td>
+</tr>
+<tr>
+<td>202001</td>
+<td>C</td>
+<td>45</td>
+<td>100</td>
+<td>=C2/D4</td>
+</tr>
+<tr>
+<td>202002</td>
+<td>A</td>
+<td>20</td>
+<td>100</td>
+<td>=C2/D5</td>
+</tr>
+<tr>
+<td>202002</td>
+<td>B</td>
+<td>35</td>
+<td>100</td>
+<td>=C2/D6</td>
+</tr>
+<tr>
+<td>202002</td>
+<td>C</td>
+<td>45</td>
+<td>100</td>
+<td>=C2/D7</td>
+</tr>
+<tr>
+<td>202003</td>
+<td>A</td>
+<td>10</td>
+<td>100</td>
+<td>=C2/D8</td>
+</tr>
+<tr>
+<td>202003</td>
+<td>B</td>
+<td>30</td>
+<td>100</td>
+<td>=C2/D9</td>
+</tr>
+<tr>
+<td>202003</td>
+<td>C</td>
+<td>60</td>
+<td>100</td>
+<td>=C2/D10</td>
+</tr>
+</tbody>
+</table>
+<p>但是当时间列、产品量较多时，使用 Excel 就不是很方便，这里介绍使用 pandas 的方法解决这类问题。</p>
+<h2 id="pandas解决方案">pandas解决方案</h2>
+<p>与 Excel 求占比思路类似，我们也可以将各月份销售总额作为新列的数据，然后相除即可。</p>
+<p>首先，读取数据，并按日期进行分组求和。</p>
+<pre><code class="language-python">import pandas as pd 
+import numpy as np 
+
+np.set_printoptions(suppress=True)
+# 读取数据
+data = pd.read_csv('data.csv', encoding='utf8')
+# 分组求和
+sum_data = data.groupby('date').sum('value')
+</code></pre>
+<p>这样就能得到每个月份的销售总额了。</p>
+<pre><code>	value
+date	
+202001	100
+202002	100
+202003	100
+</code></pre>
+<p>接着，就是将销售总额作为新的一列并且要和其对应的月份一一对应。这里使用的是 merge 方法，且连接方式必须为<strong>outer</strong>，只有这样才能确保每条销售记录后都会有该月份对应的销售总额。</p>
+<pre><code class="language-python">merge_data = pd.merge(left=data, right=sum_data, how='outer', on='date')
+</code></pre>
+<p>如此便能得到类似在 Excel 中的数据：</p>
+<pre><code>date  name value_x	value_y
+202001	A	30	100
+202001	B	25	100
+202001	C	45	100
+202002	A	20	100
+202002	B	35	100
+202002	C	45	100
+202003	A	10	100
+202003	B	30	100
+202003	C	60	100
+</code></pre>
+<p>然后，让销售额处理总销售额，并作为新列，次列就是每条记录对应的销售额占比。当然，也可以使用<code>round</code>函数改变占比保留的小数位。</p>
+<pre><code class="language-python">merge_data['percentage'] = merge_data['value_x'] / merge_data['value_y'] * 100
+
+# 设置保留小数位
+# merge_data.round({'percentage': 2})
+</code></pre>
+<pre><code>date	name	value_x	value_y	percentage
+202001	A	30	100	30.0
+202001	B	25	100	25.0
+202001	C	45	100	45.0
+202002	A	20	100	20.0
+202002	B	35	100	35.0
+202002	C	45	100	45.0
+202003	A	10	100	10.0
+202003	B	30	100	30.0
+202003	C	60	100	60.0
+</code></pre>
+<p>最后，还可以只取一部分想要的数据，需要的话，还可以保存到本地 CSV 或 Excel 文件。</p>
+<pre><code class="language-python">sales = pd.DataFrame({'date':merge_data['date'],'name':merge_data['name'],'value':merge_data['value_x'],'percentage':merge_data['percentage']})
+
+sales.to_csv('res.csv', encoding='utf8',index=False)
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E7%94%A8pandas%E8%AE%A1%E7%AE%97%E5%8D%A0%E6%AF%94">用pandas计算占比</a>
+<ul>
+<li><a href="#%E9%9C%80%E6%B1%82%E6%8F%8F%E8%BF%B0">需求描述</a></li>
+<li><a href="#pandas%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">pandas解决方案</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/about_gridea_and_future/">
+              <h3 class="post-title">
+                使用Gridea创建自己博客的构想
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

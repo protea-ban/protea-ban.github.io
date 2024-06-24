@@ -1,0 +1,340 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>selenium+chromedriver实现PT站自动点赞和评论 | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="selenium+chromedriver实现PT站自动点赞和评论 | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="事情起因是之前春节时注册了几个 PT 站，有些需要通过考核，本来想着只要通过北洋园、HDFans就够了，结果周六的时候发现 carPT 考核任务中的上传条件我已经满足，分分钟就能完成下载任务，但魔力任务就差很多了，如果光靠做种恐怕来不及，于..." />
+    <meta name="keywords" content="爬虫" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              selenium+chromedriver实现PT站自动点赞和评论
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-03-11
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://protea-ban.github.io/tag/Ij0jF8Knmd/" class="post-tag">
+                  # 爬虫
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>事情起因是之前春节时注册了几个 PT 站，有些需要通过考核，本来想着只要通过北洋园、HDFans就够了，结果周六的时候发现 carPT 考核任务中的上传条件我已经满足，分分钟就能完成下载任务，但魔力任务就差很多了，如果光靠做种恐怕来不及，于是想另辟蹊径，通过说感谢和评论来获取魔力值。这些东西肯定不能手动来做，就写了个自动脚本。</p>
+<pre><code class="language-sql">#  selenium 是自动化测试工具 可以控制浏览器
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
+import json
+import random
+# 汉字转拼音 
+import pypinyin
+
+
+thanks_lst = [
+'感谢分享！'
+,'非常感谢'
+,'感谢大佬'
+,'楼主威武！'
+,'谢谢大佬分享'
+,'非常感谢楼主分享'
+]
+
+# 汉字转拼音 （去掉style=pypinyin.NORMAL  返回带声调拼音）
+def toPinyin(word):
+    s = ''
+    for i in pypinyin.pinyin(word, style=pypinyin.NORMAL):
+        s += ''.join(i)
+    ss = s.replace(&quot;（&quot;, &quot;(&quot;).replace(&quot;）&quot;, &quot;)&quot;).replace(&quot;：&quot;, &quot;:&quot;).replace(&quot;。&quot;, &quot;.&quot;).replace(&quot;，&quot;, &quot;,&quot;).replace(&quot;！&quot;, &quot;!&quot;).replace(&quot;、&quot;, &quot;&quot;).replace(&quot;【&quot;, &quot;[&quot;).replace(&quot;】&quot;, &quot;]&quot;)
+    return ss[0:66]
+    
+# 随机数（用来每一步停顿随机时间）
+def _sleep():
+    return random.randint(3,9)
+
+_options = Options()
+# _options.add_argument('--headless')  # 使用有界面谷歌浏览器模式
+_options.add_argument('--disable-gpu')
+_options.add_argument('--no-sandbox')
+_options.binary_location = &quot;D:/Program Files/chrome-win64/chrome.exe&quot; 
+# _path = 'C:/Users/Administrator/AppData/Local/Programs/Python/Python38-32/chromedriver_84.exe'
+
+# driver = webdriver.Chrome(options=_options, executable_path=_path)
+driver = webdriver.Chrome(options=_options)
+
+# =&gt;=&gt;=&gt;=&gt;=&gt; 用户密码登录，有时必须人为验证，所以直接换成 有界面的浏览器 扫码登录 &lt;=&lt;=&lt;=&lt;=&lt;
+# 打开头条任意链接
+driver.get('https://carpt.net/')
+# 等待3秒
+time.sleep(3)
+# 点击登录按钮
+# driver.find_elements_by_xpath('//div[@class=&quot;nav-login&quot;]/a')[0].click()
+time.sleep(1)
+# 点击微信扫码登录
+# driver.find_elements_by_xpath('//*[@id=&quot;login-platform-footer&quot;]/div[4]')[0].click()
+# 人为开始登录 验证 （请15秒内完成）
+time.sleep(15)
+
+# 创建一个包含所有可能整数的列表
+numbers = list(range(2233, 7817))
+
+# 已选择的数字列表
+selected_numbers = [2897,
+ 2963,
+ 2039,
+ 2973,
+ 3698,
+ 1397,
+ 2703,
+ 2336,
+ 3326,
+ 2082,
+ 3006,
+ 1809,
+ 3555,
+ 2042,
+ 1841,
+ 3261,
+ 3053,
+ 2000,
+ 1551]
+
+# 函数：从 numbers 选择一个随机整数且未出现过
+def choose_unique_number():
+    if not numbers:  # 如果没有剩余的数字可以选择
+        return None
+    random_number = random.choice(numbers)
+    numbers.remove(random_number)
+    selected_numbers.append(random_number) # 可以记录已选择的数字
+    return random_number
+
+def page_loading_timeout(driver, url, time):
+    '''
+    :param driver: 参数1，传入浏览器对象
+    :param url: 参数2，传入url
+    :param time: 参数3，设置超时时间，单位是秒
+    :return:
+    '''
+    driver.set_page_load_timeout(time)
+    try:
+        driver.get(url)
+    except:
+        print(&quot;！！！！！！time out after %s seconds when loading page！！！！！！&quot; % time)
+        # 当页面加载时间超过设定时间，通过js来stop，即可执行后续动作
+        driver.execute_script(&quot;window.stop()&quot;)
+
+count = 0
+comment_number = 0
+
+while comment_number &lt;= 2010:
+    # 选择一个随机的、未出现过的整数
+    unique_number = choose_unique_number()
+
+    # 打开帖子
+    url = f'https://carpt.net/details.php?id={unique_number}'
+    # driver.get(url)
+    page_loading_timeout(driver,url,30)
+    time.sleep(_sleep())
+
+    try:
+        driver.find_element_by_xpath('//*[@id=&quot;saythanks&quot;]').click()
+    except Exception as e:
+        print(f'感谢失败 =&gt; {e}')
+
+    ss = random.choice(thanks_lst)
+    time.sleep(0.5)
+    try:
+        # 回帖输入框
+        # //*[@id=&quot;compose&quot;]/textarea
+        driver.find_element_by_xpath('//*[@id=&quot;compose&quot;]/textarea').clear()
+        driver.find_element_by_xpath('//*[@id=&quot;compose&quot;]/textarea').send_keys(ss)
+        time.sleep(2)
+        
+        # 提交
+        # //*[@id=&quot;qr&quot;]
+        driver.find_element_by_xpath('//*[@id=&quot;qr&quot;]').click()
+        comment_number += 1
+        print(f'已完成第 {comment_number} 次评论')
+
+        count += 1
+        # 歇一会儿
+        if count &gt;= random.randint(80,100):
+            print(f'一口气评论 {count} 次，先歇一会...')
+            count = 0
+            # driver.get(mjson['url'])
+            time.sleep(random.randint(80,100))
+    except Exception as e:
+        print(f'评论失败 =&gt; {e}')
+
+    time.sleep(_sleep())
+
+print(f&quot;xxx =&gt; 回帖完毕...&quot;)
+
+
+#退出浏览
+driver.quit()
+
+</code></pre>
+<p>总结：</p>
+<ul>
+<li>还是像往常一样，准备软件和环境花了一半的时间。</li>
+<li>还好网站比较简单，很多地方通过 Xpath 就能轻松获得。</li>
+<li>每次运行都得重新登录，可以尝试通过 cookie 直接登录。</li>
+<li>当页面加载时间超过设定时间，通过 js 来 stop ，即可执行后续动作。这点还挺不错的。</li>
+<li>中间的 sleep 时间怎么设是个问题，最好尽可能地符合真人的操作。<br>
+参考：<br>
+<a href="https://blog.csdn.net/m0_50164675/article/details/108065462">python自动回帖，批量回帖(转)_python论坛自动回帖-CSDN博客</a><br>
+<a href="https://www.cnblogs.com/stvadv/p/11667939.html#:~:text=%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%201%20%E8%AE%BE%E7%BD%AE%E4%BA%86%E6%9C%80%E5%A4%A7%E7%AD%89%E5%BE%85%E6%97%B6%E9%97%B4%E4%B8%BA10%E7%A7%92%E3%80%82%202%20%E5%A6%82%E6%9E%9C10%E7%A7%92%E6%B2%A1%E6%9C%89%E5%8A%A0%E8%BD%BD%E5%AE%8C%E6%88%90%EF%BC%8C%E6%89%93%E5%8D%B0%E2%80%9Ctime%20out%20after%2010,out%20after%20%25s%20seconds%20when%20loading%20page%EF%BC%81%20">selenium学习笔记11——driver.get(url) 页面加载时间太长 - 银杏叶的学习笔记 - 博客园 (cnblogs.com)</a></li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/投资周记（013）202403010 卖飞了好几笔/">
+              <h3 class="post-title">
+                投资周记（013）202403010 卖飞了好几笔
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

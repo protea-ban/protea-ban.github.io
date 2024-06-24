@@ -1,0 +1,240 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>骚操作！利用百度首页换肤的图片上传 API 做图床 | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="骚操作！利用百度首页换肤的图片上传 API 做图床 | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="骚操作！利用百度首页换肤的图片上传 API 做图床
+
+解析 API
+
+图床：专门用来存放图片，同时允许以外链地址访问这些图片的网络空间。
+
+说白了，图床就是你上传一张图片，它返回给你一个链接，通过这个链接便能看到这张图片。
+现在很多人都习惯..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              骚操作！利用百度首页换肤的图片上传 API 做图床
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-06-06
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://i.microlink.io/https%3A%2F%2Fcards.microlink.io%2F%3Fpreset%3Dadobe%26title%3D%25E9%25AA%259A%25E6%2593%258D%25E4%25BD%259C%25EF%25BC%2581%25E5%2588%25A9%25E7%2594%25A8%25E7%2599%25BE%25E5%25BA%25A6%25E9%25A6%2596%25E9%25A1%25B5%25E6%258D%25A2%25E8%2582%25A4%25E7%259A%2584%25E5%259B%25BE%25E7%2589%2587%25E4%25B8%258A%25E4%25BC%25A0%2BAPI%2B%25E5%2581%259A%25E5%259B%25BE%25E5%25BA%258A" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h1 id="骚操作利用百度首页换肤的图片上传-api-做图床">骚操作！利用百度首页换肤的图片上传 API 做图床</h1>
+<figure data-type="image" tabindex="1"><img src="http://imgsrc.baidu.com/super/pic/item/f603918fa0ec08fa171bfdf756ee3d6d55fbda43.jpg" alt="" loading="lazy"></figure>
+<h2 id="解析-api">解析 API</h2>
+<blockquote>
+<p>图床：专门用来存放图片，同时允许以外链地址访问这些图片的网络空间。</p>
+</blockquote>
+<p>说白了，图床就是你上传一张图片，它返回给你一个链接，通过这个链接便能看到这张图片。</p>
+<p>现在很多人都习惯用 markdown 进行创作，markdown 的好处是让人专注于创作。创作过程中，难免会配一些与主题相关的图片，配图的好处就是能大大提高文章的可读性。如果一篇文章连一张图片都没有，估计没多少人能耐心看完。而图床则是大多数人配图首选。</p>
+<p>最近发现百度首页换肤（页面左上角）可以自定义，能够上传自己的图片，那么！如果它也是返回图片链接，岂不是可以。。。。<br>
+<img src="http://imgsrc.baidu.com/super/pic/item/a044ad345982b2b7579ad5943eadcbef76099b5d.jpg" alt="" loading="lazy"></p>
+<p>按下 F12 ，进行网络分析，映入眼帘的就是这一大堆链接，这个 upload 就很引人注目好吧，点开看看。</p>
+<figure data-type="image" tabindex="2"><img src="http://imgsrc.baidu.com/super/pic/item/6c224f4a20a446235a5b49329722720e0df3d7c9.jpg" alt="" loading="lazy"></figure>
+<p>完整链接是这样，很值得怀疑，往下扒拉扒拉，看看其上传的数据。<br>
+<img src="http://imgsrc.baidu.com/super/pic/item/ac345982b2b7d0a2849be8cdc4ef76094b369a14.jpg" alt="" loading="lazy"></p>
+<p>找到 Form Data ，点 view source 看原始的上传数据，哎呀！这不就是我本地图片名吗？感觉离真相越来越近了有木有。</p>
+<figure data-type="image" tabindex="3"><img src="http://imgsrc.baidu.com/super/pic/item/574e9258d109b3de22f20838c3bf6c81800a4c15.jpg" alt="" loading="lazy"></figure>
+<p>还记得图床的前提条件是要返回图片的链接吗，查看返回内容，是 json 数据！最爱 json 数据了！点开看看。</p>
+<figure data-type="image" tabindex="4"><img src="http://imgsrc.baidu.com/super/pic/item/b219ebc4b74543a994f1169c11178a82b80114f3.jpg" alt="" loading="lazy"></figure>
+<p>又看到了我的文件名！那下面的链接就不用我多说了吧？</p>
+<p>至此，我们可以反推一下，大胆认为最开始我们认定的上传链接就是我们要找的 API ，即：<br>
+<code>https://sp0.baidu.com/6_R1fD_bAAd3otqbppnN2DJv/Pic/upload?pid=super&amp;app=skin&amp;logid=你自己的百度登录id</code></p>
+<h2 id="打包-api">打包 API</h2>
+<p>至此，整个梳理流程就算完事了，我们既然拿到了其 API 就没必要非得在百度首页上传了，还得受其裁剪设置。那我们自己写上传用的程序就完事！</p>
+<figure data-type="image" tabindex="5"><img src="http://imgsrc.baidu.com/super/pic/item/6159252dd42a28345f05da5b54b5c9ea15cebf3b.jpg" alt="" loading="lazy"></figure>
+<p><strong>真正使用步骤：</strong></p>
+<ol>
+<li>
+<p>将上面 HTML 代码中的 logid 换成你自己的。</p>
+</li>
+<li>
+<p>在浏览器上登录百度账号。</p>
+</li>
+<li>
+<p>在浏览器中打开刚才保存的 HTML 文件。</p>
+<figure data-type="image" tabindex="6"><img src="http://imgsrc.baidu.com/super/pic/item/9358d109b3de9c826f5316df6381800a19d843a8.jpg" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p>上传图片。</p>
+</li>
+<li>
+<p>返回的 json 数据中就能看到真正链接，将链接中的转义符去掉即可。或者将 json 数据复制到 json 解析工具（推荐：http://c.runoob.com/front-end/53）里，处理后可直接得到链接。<br>
+<img src="http://imgsrc.baidu.com/super/pic/item/9922720e0cf3d7ca220dd326fd1fbe096a63a9e3.jpg" alt="" loading="lazy"><br>
+<img src="https://i.loli.net/2019/12/28/lSLvCsHn57dxJUW.gif" alt="json.gif" loading="lazy"></p>
+</li>
+<li>
+<p>Enjoy！</p>
+</li>
+</ol>
+<p>相应的 HTML 文件我已经为你打包好了，在公众号中回复 “图床” 即可获得。</p>
+<figure data-type="image" tabindex="7"><img src="http://imgsrc.baidu.com/super/pic/item/0b46f21fbe096b63ab41b10003338744ebf8ac02.jpg" alt="" loading="lazy"></figure>
+<p>本文的静态图片都是用该方法上传到百度图床的，理论用该方法上传的图片是永久有效的，如果你看到方法失效可以加我微信告诉我一声，我再找新方法，或者有什么新想法也可以加我微信交流。</p>
+<p>​</p>
+<figure data-type="image" tabindex="8"><img src="http://imgsrc.baidu.com/super/pic/item/0b55b319ebc4b74557825846c0fc1e178a82154f.jpg" alt="" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E9%AA%9A%E6%93%8D%E4%BD%9C%E5%88%A9%E7%94%A8%E7%99%BE%E5%BA%A6%E9%A6%96%E9%A1%B5%E6%8D%A2%E8%82%A4%E7%9A%84%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0-api-%E5%81%9A%E5%9B%BE%E5%BA%8A">骚操作！利用百度首页换肤的图片上传 API 做图床</a>
+<ul>
+<li><a href="#%E8%A7%A3%E6%9E%90-api">解析 API</a></li>
+<li><a href="#%E6%89%93%E5%8C%85-api">打包 API</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/正态性检验/">
+              <h3 class="post-title">
+                正态性检验
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RANK 和 ROW_NUMBER 函数的区别 | protea-ban 的个人博客</title>
+<link rel="shortcut icon" href="https://protea-ban.github.io/favicon.ico?v=1719191443063">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://protea-ban.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="RANK 和 ROW_NUMBER 函数的区别 | protea-ban 的个人博客 - Atom Feed" href="https://protea-ban.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="RANK() 和 ROW_NUMBER() 函数的区别
+RANK() 和 ROW_NUMBER() 函数在 PostgreSQL 中都是窗口函数，它们用于为结果集内的每一行分配一个唯一的序号。不过，两者的工作方式有所不同：
+
+
+ROW_NU..." />
+    <meta name="keywords" content="SQL" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://protea-ban.github.io">
+  <img class="avatar" src="https://protea-ban.github.io/images/avatar.png?v=1719191443063" alt="">
+  </a>
+  <h1 class="site-title">
+    protea-ban 的个人博客
+  </h1>
+  <p class="site-description">
+    有限的青春 无限的代码
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              RANK 和 ROW_NUMBER 函数的区别
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-02-01
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://protea-ban.github.io/tag/RHFEI9FS6/" class="post-tag">
+                  # SQL
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h1 id="rank-和-row_number-函数的区别"><code>RANK()</code> 和 <code>ROW_NUMBER()</code> 函数的区别</h1>
+<p><code>RANK()</code> 和 <code>ROW_NUMBER()</code> 函数在 PostgreSQL 中都是窗口函数，它们用于为结果集内的每一行分配一个唯一的序号。不过，两者的工作方式有所不同：</p>
+<ol>
+<li>
+<p><code>ROW_NUMBER()</code> 函数为每一行分配一个独一无二的序号，这个序号是基于 OVER 子句中指定的排序顺序。即使多行的排序键值相同，每行的序号也会是连续且唯一的。</p>
+</li>
+<li>
+<p><code>RANK()</code> 函数在为行分配序号时会处理排序键值相同的情况。如果两行（或多行）的排序键值相同，则它们的排名将相同。此时，<code>RANK()</code> 函数会&quot;留空&quot;序号；例如，如果有两行并排名第一，则它们都会被赋予rank值 1，紧接着的下一行将被赋予 rank 值 3，而非 2。</p>
+</li>
+</ol>
+<p>以下是一个具体的举例：</p>
+<pre><code>-- 假设我们根据 score 列对下面的表进行排序：  
+​  
+| id | score |  
+|----|-------|  
+| 1  | 100   |  
+| 2  | 100   |  
+| 3  | 90    |  
+| 4  | 80    |  
+​  
+-- 使用 ROW_NUMBER() 会得到如下结果：  
+​  
+| id | score | row_number |  
+|----|-------|------------|  
+| 1  | 100   | 1          |  
+| 2  | 100   | 2          |  
+| 3  | 90    | 3          |  
+| 4  | 80    | 4          |  
+​  
+-- 使用 RANK() 会得到如下结果：  
+​  
+| id | score | rank |  
+|----|-------|------|  
+| 1  | 100   | 1    |  
+| 2  | 100   | 1    |  
+| 3  | 90    | 3    |  
+| 4  | 80    | 4    |  
+​  
+-- 注意第三行的 rank 是 3 而非 2，这是因为前两个 id 有相同的 rank。
+</code></pre>
+<p>因此，在选择哪种函数时，需要根据所需要的排序和排名逻辑来决定。如果不需要关注相同排序键值的情况，则使用 <code>ROW_NUMBER()</code>。如果要为相同的排序键值分配相同的排名，并对随后的序号进行&quot;留空&quot;处理，则使用 <code>RANK()</code>。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#rank-%E5%92%8C-row_number-%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><code>RANK()</code> 和 <code>ROW_NUMBER()</code> 函数的区别</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://protea-ban.github.io/post/投资周记（009）20240128 创新低与快速反弹/">
+              <h3 class="post-title">
+                投资周记（009）20240128 创新低与快速反弹
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <script async src="//webviso.yestool.org/js/index.min.js"></script>
+<script src="//unpkg.com/heti/umd/heti-addon.min.js"></script>
+<script>
+  const heti = new Heti('.heti');
+  heti.autoSpacing(); // 自动进行中西文混排美化和标点挤压
+</script>
+本页访问人次:<span id="page_pv"></span>本页访问人数:<span id="page_uv"></span>
+  <a class="rss" href="https://protea-ban.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
